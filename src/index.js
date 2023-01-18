@@ -36,26 +36,19 @@ const MORSE_TABLE = {
   '----.': '9',
   '-----': '0',
 };
+
 function strLetter(str) {
-  if (str === '**********') return ' ';
-  let empt = /0+0/g;
-  let point = /10/g;
-  let dash = /11/g;
-  var newstr = str.replace(empt, '');
-  newstr = newstr.replace(point, '.');
-  newstr = newstr.replace(dash, '-');
-  for (let key in MORSE_TABLE) {
-    if (key == newstr) {
-      return MORSE_TABLE[key];
-    }
-  }
+  let strMorse = str
+    .replace(/0+0/g, '')
+    .replace(/10/g, '.')
+    .replace(/11/g, '-');
+  return MORSE_TABLE[strMorse] || ' ';
 }
 
 function decode(expr) {
   let letter = '';
-  let length = expr.length / 10;
   let a = 0;
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < expr.length / 10; i++) {
     letter += strLetter(expr.slice(a, a + 10));
     a += 10;
   }
